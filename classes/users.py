@@ -51,6 +51,56 @@ class User:
 
     def createChart(self):
         workbook = xlsxwriter.Workbook('../output/test.xlsx')
+        # bold = workbook.add_format({'bold': 1})
+        # headings = []
+        expenseLabels = []
+        expenseData = []
         worksheet = workbook.add_worksheet()
-        worksheet.write('A1', 'Hello world')
+        for expense in self.expenses:
+            expenseLabels.append(expense.label)
+            expenseData.append(expense.value)
+
+        # I have to keep track of the data myself in the sheet
+        # Or figure something out with the worksheet.table attribute
+        worksheet.write_column('A1', expenseLabels)
+        worksheet.write_column('B1', expenseData)
+        print(len(worksheet.table.values()))
+        pieChart = workbook.add_chart({"type": "pie"})
+        pieChart.set_style(10)
+        pieChart.add_series(
+            {'name': 'Expenses', 'categories': f'=Sheet1!A1:A{len(worksheet.table.values())}', 'values': f'=Sheet1!B1:B{len(worksheet.table.values())}', 'points': [
+                {'fill': {'color': '#5ABA10'}},
+                {'fill': {'color': '#FE110E'}},
+                {'fill': {'color': '#CA5C05'}},
+            ]})
+        worksheet.insert_chart("E3", pieChart)
+        # row = 1
+        # col = 1
+
+        # def writeFromExpense():
+        #     # create row and col variables
+        #     row = 0
+        #     col = 0
+        #     # fill out spreadsheet titles
+        #     # iterate through expenses labels
+        #     for expense in self.expenses:
+        #         # write label
+        #         worksheet.write(row, col, expense.label)
+        #         # increase row + 1
+        #         row += 1
+        #     # reset row and increase col by 1
+        #     worksheet.write(row, col, "total")
+        #     row = 0
+        #     col += 1
+        #     # iterate through expenses values
+        #     for expense in self.expenses:
+        #         # write expense
+        #         worksheet.write(row, col, expense.value)
+        #         row += 1
+        #         # increase row
+        #     worksheet.write(row, col, self.total_expenses())
+        #     print(self.expenses)
+
+        # writeFromExpense()
+
         workbook.close()

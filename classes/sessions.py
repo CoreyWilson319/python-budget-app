@@ -32,34 +32,34 @@ class Session:
                 loadedExpense.paidForTheMonth = jsonExpense['paidForTheMonth']
 
     def test(self):
-        self.createUser("test", 571)
-        self.user.addExpense("transportation", "loan", 360)
-        self.user.addExpense("transportation", "gas", 140)
-        self.user.addExpense("food", "groceries", 200)
-        self.user.addExpense("bills", "xfinity", 196)
-        self.user.addExpense("bills", "paypal", 41)
-        self.user.addExpense("bills", "phone", 75)
-        self.user.addExpense("misc_expenses", "fun", 247)
-        self.user.addExpense("misc_expenses", "dates", 140)
-        self.user.addExpense("misc_expenses", "extra car payment", 360)
-        self.user.addExpense("misc_expenses", "personal care", 80)
-        self.user.addExpense("subscriptions", "planet fitness", 20)
-        self.user.addExpense("subscriptions", "youtube", 12)
-        self.user.addExpense("subscriptions", "prime", 9)
-        self.user.addExpense("savings", "general", 400)
-        self.user.addGoal("school loan", 1000, "10/10/22")
-        self.user.addGoal("car loan", 1000)
-        self.user.addValue("Pay bills every month")
-        self.user.addValue("Save 400 dollars every month")
-        self.user.addValue("100 Dollars for dates")
+        # self.createUser("test", 571)
+        # self.user.addExpense("transportation", "loan", 360)
+        # self.user.addExpense("transportation", "gas", 140)
+        # self.user.addExpense("food", "groceries", 200)
+        # self.user.addExpense("bills", "xfinity", 196)
+        # self.user.addExpense("bills", "paypal", 41)
+        # self.user.addExpense("bills", "phone", 75)
+        # self.user.addExpense("misc_expenses", "fun", 247)
+        # self.user.addExpense("misc_expenses", "dates", 140)
+        # self.user.addExpense("misc_expenses", "extra car payment", 360)
+        # self.user.addExpense("misc_expenses", "personal care", 80)
+        # self.user.addExpense("subscriptions", "planet fitness", 20)
+        # self.user.addExpense("subscriptions", "youtube", 12)
+        # self.user.addExpense("subscriptions", "prime", 9)
+        # self.user.addExpense("savings", "general", 400)
+        # self.user.addGoal("school loan", 1000, "10/10/22")
+        # self.user.addGoal("car loan", 1000)
+        # self.user.addValue("Pay bills every month")
+        # self.user.addValue("Save 400 dollars every month")
+        # self.user.addValue("100 Dollars for dates")
 
-        self.user.createChart()
         # self.user.enoughIncomeCheck()
 
         # self.saveUser()
 
         # self.user.createSpreadsheet()
-        # self.loadUser()
+        self.loadUser()
+        self.user.createChart()
         # self.saveUser()
 
     def saveUser(self):
@@ -74,6 +74,6 @@ class Session:
 
 
 newSession = Session(1)
+newSession.test()
 
 # newSession.createUser("corey", 571)
-newSession.test()
