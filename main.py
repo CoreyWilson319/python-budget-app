@@ -1,3 +1,8 @@
+import lib
+from lib.expenses import *
+from lib.income import *
+from lib.users import *
+from lib.sessions import *
 # create sloppy inputs to create budget
 # create option to read text file to create budget
 # def loadUser(self):
@@ -12,3 +17,6 @@
 # Stretch
 # find a way to store file online and read file from online
 # pass
+
+newSession = Session(1)
+newSession.test()
