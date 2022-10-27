@@ -82,6 +82,10 @@ class User:
         workbook = xlsxwriter.Workbook(
             f"output/{self.username.title()}'s-Budget.xlsx")
 
+        dollarFormat = workbook.add_format(
+            {'num_format': '-$#,##0.00'})
+        labelFormat = workbook.add_format({'bold': True})
+
         def createExpenseSheet():
             expenseLabels = []
             expenseData = []
@@ -90,13 +94,13 @@ class User:
                 expenseLabels.append(expense.label.title())
                 expenseData.append(expense.value)
 
-            expenseDollarFormat = workbook.add_format(
-                {'num_format': '-$#,##0.00'})
-            expenseSheet.set_column(1, 1, 10, expenseDollarFormat)
+            dollarFormat = workbook.add_format(
+                {'num_format': '$#,##0.00'})
+            expenseSheet.set_column(1, 1, 10, dollarFormat)
             labelFormat = workbook.add_format({'bold': True})
             expenseSheet.set_column(0, 0, 20, labelFormat)
             expenseSheet.set_column(3, 3, 20, labelFormat)
-            expenseSheet.set_column(4, 4, 10, expenseDollarFormat)
+            expenseSheet.set_column(4, 4, 10, dollarFormat)
             expenseSheet.write_column('A1', expenseLabels)
             expenseSheet.write_column('B1', expenseData)
             expenseLastCell = len(expenseSheet.table.values())
@@ -117,7 +121,7 @@ class User:
             expenseSheet.write_column(
                 'D1', groupedExpenseTotals.keys(), labelFormat)
             expenseSheet.write_column(
-                'E1', groupedExpenseTotals.values(), expenseDollarFormat)
+                'E1', groupedExpenseTotals.values(), dollarFormat)
             groupedExpensesPieChart.add_series(
                 {'name': 'Expenses', 'categories': f'=Expenses!D1:D{len(groupedExpenseTotals.keys())}', 'values': f'=Expenses!E1:E{len(groupedExpenseTotals.values()    )}', 'points': [
                     {'fill': {'color': '#5ABA10'}},
@@ -129,9 +133,19 @@ class User:
             expenseSheet.insert_chart("G20", groupedExpensesPieChart)
 
         def createIncomeSheet():
-            pass
+            incomeSheet = workbook.add_worksheet("Income")
+
+            incomeSources = []
+            incomeAmounts = []
+            for item in self.income:
+                incomeSources.append(item.source)
+                incomeAmounts.append(item.amount)
+
+            incomeSheet.write_column("A1", incomeSources, labelFormat)
+            incomeSheet.write_column("B1", incomeAmounts, dollarFormat)
         self.total_expenses_cat()
 
         createExpenseSheet()
+        createIncomeSheet()
 
         workbook.close()
